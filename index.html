@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Eric Ching Math Quiz</title>
+    <link rel="stylesheet" type="text/css" href= "stylesheet.css" >
+</head>
+
+<body>
+    <div class="container">
+        <div id="quiz">
+            <h3>Eric Ching Project 2 Math Quiz</h3>
+            <p id="completion">Question x of y</p>
+            <p id="prompt"></p>
+            <div class="answers">
+                <button id="btn0"><span id="choice0"></span></button>
+                <button id="btn1"><span id="choice1"></span></button>
+                <button id="btn2"><span id="choice2"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var prompts = [
+            new prompt('<img class="image" src="q5.PNG" width="300px">', ['<img class="image" src="star.PNG" width="100px">', '<img class="image" src="triangle.PNG" width="100px">', '<img class="image" src="circle.PNG" width="100px">'],'<img class="image" src="circle.PNG" width="100px">' ),
+            new prompt("5 + 5 is ", ["15", "20","10"], "10"),
+            new prompt("Benjamin bought 12 goldfish. Each goldfish cost $0.98. How much did Benjamin spend?", ["$10.66", "$11.96", "$9.92"], "$11.96"),
+            new prompt("What place value is 9 in the number 90?", ["Tens place", "Ones place","Hundreds place"], "Tens place"),
+            new prompt("100 x 11 = ", ["$1100", "$101", "$1110"], "$1100"),
+
+        ];
+
+        var quiz = new mathQuiz(prompts);
+
+        function mathQuiz(prompts) {
+            this.promptIndex = 0;
+            this.prompts = prompts;
+            this.score = 0;
+        }
+
+        mathQuiz.prototype.getIndex = function() {
+            return this.prompts[this.promptIndex];
+        }
+
+        mathQuiz.prototype.choice = function(answer) {
+            if(this.getIndex().correct(answer)) {
+                this.score++;
+        }
+            this.promptIndex++;
+        }
+
+        mathQuiz.prototype.ended = function() {
+            return this.promptIndex === this.prompts.length;
+        }
+
+        function prompt(question, choices, answer) {
+            this.question = question;
+            this.choices = choices;
+            this.answer = answer;
+        }
+
+        prompt.prototype.correct = function(choice) {
+            return this.answer === choice;
+        }
+
+        function choice(num, choice) {
+            var button = document.getElementById(num);
+            button.onclick = function() {
+                quiz.choice(choice);
+                submit();
+            }
+        };
+
+        function showCompletion() {
+            var currentPrompt = quiz.promptIndex + 1;
+            var element = document.getElementById("completion");
+            element.innerHTML = "Question " + currentPrompt + " of " + quiz.prompts.length;
+        };
+
+        function showScore() {
+            var end = "<h3>You have reached the end of the quiz.</h3>";
+            end += "<h2 id='score'> You scored: " + quiz.score + " out of 5" +"</h2>";
+            var element = document.getElementById("quiz");
+            element.innerHTML = end;
+            if (quiz.score >=4){
+              alert("You passed");
+            }else{
+              alert("You failed")
+            }
+        };
+
+        function submit() {
+            if(quiz.ended()) {
+                showScore();
+            }
+            else {
+                var element = document.getElementById("prompt");
+                element.innerHTML = quiz.getIndex().question;
+
+                var choices = quiz.getIndex().choices;
+                for(var i = 0; i < choices.length; i++) {
+                    var element = document.getElementById("choice" + i);
+                    element.innerHTML = choices[i];
+                    choice("btn" + i, choices[i]);
+                }
+                showCompletion();
+            }
+        };
+
+        submit();
+    </script>
+</body>
+</html>

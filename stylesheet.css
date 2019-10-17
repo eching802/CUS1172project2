@@ -1,0 +1,47 @@
+body {
+    font-family: "Georgia";
+    background-color:#F5F5F5;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border: 2px solid #3366FF;
+    height: auto;
+    width: auto;
+}
+.container {
+    font-size: 30px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.container #prompt {
+    font-size: 25px;
+}
+
+#score {
+    text-align: center;
+    font-size: 30px;
+}
+
+.answers {
+    text-align: center;
+}
+
+#btn0, #btn1, #btn2 {
+    background-color: blue;
+    width: 250px;
+    font-size: 20px;
+    border: 1px solid slategray;
+    margin: 10px 40px 10px 0px;
+    padding: 10px 10px;
+}
+
+#btn0:hover, #btn1:hover, #btn2:hover{
+    background-color: lawngreen;
+}
+
+#completion {
+    color: saddlebrown;
+    font-size: 18px;
+}
